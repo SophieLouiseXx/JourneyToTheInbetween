@@ -1,0 +1,22 @@
+function init(self)
+	msg.post(".", "aquire_input_focus")
+	self.time = 0 -- timer is set to 0
+	self.time = timer.delay(1, true, function() -- timer delay is set to a second
+		self.time = self.time + 1 -- timer counts up from 0 by 1 every second
+		if self.time < 0 then
+			msg.post("loader:/go#loader", "gameover") -- go to game over
+			timer.cancel(self.time)
+		end
+	end)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == ("Star") then -- if star collected is registered
+		self.score = self.score + 50 -- adds to score by 50 if a star is collected
+		local s = gui.get_node("score")
+		gui.set_text(s, self.score) -- set new score
+	end
+end
